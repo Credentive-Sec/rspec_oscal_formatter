@@ -1,10 +1,10 @@
 # RspecOscalFormatter
 
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rspec_oscal_formatter`. To experiment with that code, run `bin/console` for an interactive prompt.
+This Library provides an RSpec Formatter that helps you to define tests that align with OSCAL Catalogs and SSPs, and produce Assessment Plan and Assessment Result documents based on the test results.
 
 ## Installation
+
+Note that this library currently depends on a (temporary) fork of oscal-ruby that includes the artifacts we are interested. We hope to coordinate with that team to merge the codebase and move on to other projects.
 
 TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
 
@@ -28,7 +28,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rspec_oscal_formatter.
+Bug reports and pull requests are welcome on GitHub at https://github.com/Credentive-Sec/rspec_oscal_formatter.
 
 ## License
 
