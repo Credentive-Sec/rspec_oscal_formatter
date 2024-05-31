@@ -1,7 +1,8 @@
 # typed: true
 # frozen_string_literal: true
 
-require 'Date'
+require 'tapioca'
+require 'date'
 require_relative '../oscal'
 
 module RspecOscalFormatter
@@ -9,46 +10,49 @@ module RspecOscalFormatter
   class CreateAssessmentPlan
     extend T::Sig
 
-    sig { returns(Hash) }
-    def build_ap_metadata_block
+    sig { params(metadata: SpecMetaDataParser).void }
+    def initialize(metadata)
+      @assessment_plan =
+        Oscal::AssessmentPlan::AssessmentPlan.new(
+          {
+            uuid: metadata.assessment_plan_uuid,
+            metadata: build_ap_metadata_block(metadata),
+            import_ssp: { href: './assessment_plan.json' },
+            reviewed_controls: make_reviewed_controls(metadata)
+          }
+        )
+    end
+
+    sig { params(metadata: SpecMetaDataParser).returns(Hash) }
+    def build_ap_metadata_block(metadata)
       {
-        title: "Automated Testing Plan for login.gov. It #{@metadata.description}",
+        title: "Automated Testing Plan for login.gov. It #{metadata.description}",
         last_modified: DateTime.now.iso8601,
         version: DateTime.now.iso8601,
         oscal_version: '1.1.2'
       }
     end
 
-    sig { returns(Hash) }
-    def make_reviewed_controls
+    sig { params(metadata: SpecMetaDataParser).returns(Hash) }
+    def make_reviewed_controls(metadata)
       {
         control_selections: [
           {
-            control_id: @metadata.control_id,
-            statement_ids: [@metadata.statement_id]
+            control_id: metadata.control_id,
+            statement_ids: [metadata.statement_id]
           }
         ]
       }
     end
 
-    sig { params(metadata: SpecMetaDataParser).void }
-    def initialize(metadata)
-      @metadata = metadata
-
-      @assessment_plan = Oscal::AssessmentPlan::AssessmentPlan.new(
-        {
-          uuid: @metadata.assessment_plan_uuid,
-          metadata: build_ap_metadata_block,
-          import_ssp: { href: './assessment_plan.json' },
-          reviewed_controls: make_reviewed_controls
-
-        }
-      )
-    end
-
     sig { returns(Oscal::AssessmentPlan::AssessmentPlan) }
     def get
       @assessment_plan
+    end
+
+    sig { params(_args: T.untyped).returns(String) }
+    def to_json(*_args)
+      @assessment_plan.to_json
     end
   end
 end

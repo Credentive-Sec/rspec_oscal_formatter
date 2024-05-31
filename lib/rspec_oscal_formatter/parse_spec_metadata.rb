@@ -6,21 +6,35 @@ module RspecOscalFormatter
   class SpecMetaDataParser
     extend T::Sig
 
-    sig { returns(Symbol) }
-    attr_reader :assessment_plan_uuid, :control_id, :description, :statement_id, :ssp_url
+    STATUS_MAP = {
+      passed: 'pass',
+      failed: 'fail',
+      pending: 'other'
+    }
 
-    sig { params(metadata_hash: Hash).void }
-    def validate_contents(metadata_hash)
+    sig { returns(Symbol) }
+    attr_reader :assessment_plan_uuid, :control_id, :description, :statement_id, :ssp_url, :reason, :state
+
+    sig { params(example: RSpec::Core::Example).void }
+    def validate_contents(example)
       # Make sure required attributes are present
+      if example.metadata[:assessment_plan].nil? ||
+         example.metadata[:control_id].nil? ||
+         example.metadata[:description].nil? ||
+         example.metadata[:statement_id].nil?
+        raise IndexError
+      end
     end
 
-    sig { params(metadata_hash: Hash).void }
-    def initialize(metadata_hash)
-      validate_contents(metadata_hash)
-      @assessment_plan_uuid = metadata_hash[:assessment_plan_uuid]
-      @control_id = metadata_hash[:control_id]
-      @description = metadata_hash[:description]
-      @statement_id = metadata_hash[:statement_id]
+    sig { params(example: RSpec::Core::Example).void }
+    def initialize(example)
+      validate_contents(example.metadata) # TODO: - figure out a way to dump out if metadata isn't complete
+      @assessment_plan_uuid = example.metadata[:assessment_plan_uuid]
+      @control_id = example.metadata[:control_id]
+      @description = example.metadata[:description]
+      @statement_id = example.metadata[:statement_id]
+      @reason = STATUS_MAP[example.execution_result.status]
+      @state = @reason == 'pass' ? 'satisfied' : 'not-satisfied'
     end
   end
 end
