@@ -19,34 +19,6 @@ module RspecOscalFormatter
     RSpec::Core::Formatters.register self, :example_finished
 
     sig { params(example: RSpec::Core::Example).returns(String) }
-    def create_assessment_plan(example)
-      example.metadata
-      ap_hash = {
-        uuid: example.metadata[:assessment_plan_uuid],
-        metadata: {
-          title: "Automated Testing Plan for login.gov. It #{example.metadata[:description]}",
-          last_modified: DateTime.now.iso8601,
-          version: '1.0',
-          oscal_version: '1.1.2'
-        },
-        import_ssp: {
-          href: 'https://github.com/rsherwood-gsa/OSCAL-CSP/blob/main/CSP_POC_ssp.json'
-        },
-        reviewed_controls: {
-          control_selections: [
-            include_controls: [
-              {
-                control_id: example.metadata[:control_id],
-                statement_ids: [example.metadata[:statement_id]]
-              }
-            ]
-          ]
-        }
-      }
-      Oscal::AssessmentPlan::AssessmentPlan.new(ap_hash).to_json
-    end
-
-    sig { params(example: RSpec::Core::Example).returns(String) }
     def create_assessment_result(example)
       ar_hash = {
         uuid: Random.uuid, # Generate a new UUID everytime we run, since this is a new result
@@ -119,7 +91,7 @@ module RspecOscalFormatter
       example_out_dir.mkpath unless example_out_dir.exist? && example_out_dir.directory?
 
       example_out_dir.join('assessment_plan.json').open('w').write(
-        create_assessment_plan(notification.example)
+        CreateAssessmentPlan.get(notification.example)
       )
 
       example_out_dir.join('assessment_result.json').open('w').write(
