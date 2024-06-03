@@ -5,6 +5,7 @@ require 'rspec'
 require 'random/formatter'
 require 'date'
 require 'pathname'
+require 'tapioca'
 
 require_relative 'oscal'
 require_relative('rspec_oscal_formatter/create_assessment_plan')
@@ -12,45 +13,47 @@ require_relative('rspec_oscal_formatter/create_assessment_results')
 require_relative('rspec_oscal_formatter/parse_spec_metadata')
 
 # To format the output of Rspec tests as OSCAL Assessment Plans and Assessment Results
-module RspecOscalFormatter
-  extend T::Sig
-  class Error < StandardError; end
+module RSpec
+  module RspecOscalFormatter
+    # extend T::Sig
+    class Error < StandardError; end
 
-  # Your code goes here...
-  class Formatter
-    extend T::Sig
+    # Your code goes here...
+    class Formatter
+      # extend T::Sig
 
-    RSpec::Core::Formatters.register self, :example_finished
+      RSpec::Core::Formatters.register self, :example_finished
 
-    OUTPUT_DIRECTORY = Pathname.new '/tmp/oscal_outputs'
+      OUTPUT_DIRECTORY = Pathname.new '/tmp/oscal_outputs'
 
-    sig { params(output: RSpec::Core::OutputWrapper).void }
-    def initialize(output)
-      @output = output
-    end
+      # sig { params(output: RSpec::Core::OutputWrapper).void }
+      def initialize(output)
+        @output = output
+      end
 
-    # Generate a timestamped directory to save the file
-    sig { params(metadata: SpecMetaDataParser).returns(Pathname) }
-    def create_output_directory(metadata)
-      example_out_dir = OUTPUT_DIRECTORY.join.join(DateTime.now.iso8601)
-      # We should raise an exception here if we can't create the directory
-      example_out_dir.mkpath unless example_out_dir.exist? && example_out_dir.directory?
-      example_out_dir
-    end
+      # Generate a timestamped directory to save the file
+      # sig { params(metadata: SpecMetaDataParser).returns(Pathname) }
+      def create_output_directory(metadata)
+        example_out_dir = OUTPUT_DIRECTORY.join.join(DateTime.now.iso8601)
+        # We should raise an exception here if we can't create the directory
+        example_out_dir.mkpath unless example_out_dir.exist? && example_out_dir.directory?
+        example_out_dir
+      end
 
-    sig { params(notification: RSpec::Core::Notifications::ExampleNotification).void }
-    def example_finished(notification)
-      metadata = SpecMetaDataParser.new(notification.example)
+      # sig { params(notification: RSpec::Core::Notifications::ExampleNotification).void }
+      def example_finished(notification)
+        metadata = SpecMetaDataParser.new(notification.example)
 
-      out_dir = create_output_directory(metadata)
+        out_dir = create_output_directory(metadata)
 
-      out_dir.join('assessment_plan.json').open('w').write(
-        CreateAssessmentPlan.new(metadata).to_json
-      )
+        out_dir.join('assessment_plan.json').open('w').write(
+          CreateAssessmentPlan.new(metadata).to_json,
+        )
 
-      out_dir.join('assessment_result.json').open('w').write(
-        CreateAssessmentResult.new(metadata).to_json
-      )
+        out_dir.join('assessment_result.json').open('w').write(
+          CreateAssessmentResult.new(metadata).to_json,
+        )
+      end
     end
   end
 end

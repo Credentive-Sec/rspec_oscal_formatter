@@ -1,5 +1,5 @@
-require_relative("datatypes")
-require_relative("list")
+require_relative('datatypes')
+require_relative('list')
 
 module Oscal
   ATTRIBUTE_TYPE_HASH = {
@@ -41,6 +41,7 @@ module Oscal
     parts: AssessmentResult::PartArray,
     party_uuids: AssessmentResult::PartyUuidArray,
     props: AssessmentResult::PropArray,
+    reason: TokenDataType,
     related_controls: AssessmentResult::RelatedControls,
     related_observations: AssessmentResult::RelatedObservationArray,
     related_risks: AssessmentResult::RelatedRiskArray,
@@ -71,7 +72,7 @@ module Oscal
 
   def self.get_type_of_attribute(attribute_name)
     klass = Oscal::ATTRIBUTE_TYPE_HASH[attribute_name.to_sym]
-    if klass == nil
+    if klass.nil?
       raise InvalidTypeError, "No type found for #{attribute_name}"
     else
       klass
