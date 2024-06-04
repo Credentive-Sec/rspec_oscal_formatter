@@ -20,6 +20,8 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 TODO: Write usage instructions here
 
+PLEASE SEE A [DEMO SPEC HERE](https://github.com/Credentive-Sec/rspec_oscal_formatter/blob/main/spec/demo_specs/demo_spec.rb) THAT GIVES AN OVERVIEW OF THE METADATA REQUIRED TO MAKE THIS WORK.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
