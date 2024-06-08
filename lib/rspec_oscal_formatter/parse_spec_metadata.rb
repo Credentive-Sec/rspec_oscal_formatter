@@ -5,19 +5,15 @@ module RSpec
   module RspecOscalFormatter
     # Tiny helper class to provide easy access to the metadata attributes in the spec.
     class SpecMetaDataParser
-      # extend T::Sig
-
       STATUS_MAP = {
         passed: 'pass',
         failed: 'fail',
-        pending: 'other',
+        pending: 'other'
       }
 
-      # sig { returns(Symbol) }
       attr_reader :assessment_plan_uuid, :control_id, :description, :statement_id, :ssp_url, :reason,
                   :state
 
-      # sig { params(example: RSpec::Core::Example).void }
       def validate_contents(metadata)
         # Make sure required attributes are present
         if metadata[:assessment_plan_uuid].nil? ||
@@ -28,7 +24,6 @@ module RSpec
         end
       end
 
-      # sig { params(example: RSpec::Core::Example).void }
       def initialize(example)
         validate_contents(example.metadata) # TODO: - figure out a way to dump out if metadata isn't complete
         @assessment_plan_uuid = example.metadata[:assessment_plan_uuid]
