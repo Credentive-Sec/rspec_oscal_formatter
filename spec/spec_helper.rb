@@ -1,4 +1,3 @@
-# typed: true
 # frozen_string_literal: true
 
 require 'rspec_oscal_formatter'
@@ -12,5 +11,9 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  config.define_derived_metadata(file_path: %r{spec/oscal}) do |meta|
+    meta[:output_directory] = '/tmp/oscal_output'
   end
 end

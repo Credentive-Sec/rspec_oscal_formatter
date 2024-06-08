@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# typed: true
 
 module RSpec
   module RspecOscalFormatter
@@ -19,13 +18,15 @@ module RSpec
         if metadata[:assessment_plan_uuid].nil? ||
            metadata[:control_id].nil? ||
            metadata[:description].nil? ||
-           metadata[:statement_id].nil?
+           metadata[:statement_id].nil? ||
+           metadata[:output_directory].nil?
           raise IndexError
         end
       end
 
       def initialize(example)
         validate_contents(example.metadata) # TODO: - figure out a way to dump out if metadata isn't complete
+        @output_directory = example.metadata[:output_directory]
         @assessment_plan_uuid = example.metadata[:assessment_plan_uuid]
         @control_id = example.metadata[:control_id]
         @description = example.metadata[:description]
