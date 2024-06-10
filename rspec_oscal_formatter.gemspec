@@ -4,7 +4,7 @@ require_relative 'lib/rspec_oscal_formatter/version'
 
 Gem::Specification.new do |spec|
   spec.name = 'rspec_oscal_formatter'
-  spec.version = RspecOscalFormatter::VERSION
+  spec.version = RSpecOscalFormatter::VERSION
   spec.authors = ['Robert Sherwood']
   spec.email = ['robert.sherwood@credentive.com']
 

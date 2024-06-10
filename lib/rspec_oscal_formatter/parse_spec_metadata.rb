@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RSpec
-  module RspecOscalFormatter
+  module RSpecOscalFormatter
     # Tiny helper class to provide easy access to the metadata attributes in the spec.
     class SpecMetaDataParser
       STATUS_MAP = {

@@ -1,4 +1,4 @@
-# RspecOscalFormatter
+# RSpecOscalFormatter
 
 This Library provides an RSpec Formatter that helps you to define tests that align with OSCAL Catalogs and SSPs, and produce Assessment Plan and Assessment Result documents based on the test results.
 

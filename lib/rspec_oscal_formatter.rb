@@ -13,7 +13,7 @@ require_relative('rspec_oscal_formatter/parse_spec_metadata')
 
 # To format the output of Rspec tests as OSCAL Assessment Plans and Assessment Results
 module RSpec
-  module RspecOscalFormatter
+  module RSpecOscalFormatter
     class Error < StandardError; end
 
     # Core class for the formatter

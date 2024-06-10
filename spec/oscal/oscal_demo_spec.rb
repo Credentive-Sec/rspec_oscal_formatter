@@ -4,7 +4,7 @@ require 'rspec'
 require_relative '../../lib/rspec_oscal_formatter'
 
 RSpec.configure do |config|
-  config.add_formatter RSpec::RspecOscalFormatter::Formatter
+  config.add_formatter RSpec::RSpecOscalFormatter::Formatter
 end
 
 RSpec.describe 'Demonstrate Oscal Features' do

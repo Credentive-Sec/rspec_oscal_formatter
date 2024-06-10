@@ -5,7 +5,7 @@ require 'date'
 require_relative '../oscal'
 
 module RSpec
-  module RspecOscalFormatter
+  module RSpecOscalFormatter
     # Create an assessment plan from the metadata and template
     class CreateAssessmentPlan
       def initialize(metadata)

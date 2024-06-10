@@ -7,7 +7,7 @@ require 'random/formatter'
 require_relative '../oscal'
 
 module RSpec
-  module RspecOscalFormatter
+  module RSpecOscalFormatter
     # Creates an Assessment Result from an RSpec Unit Test Run
     class CreateAssessmentResult
       def initialize(metadata)
