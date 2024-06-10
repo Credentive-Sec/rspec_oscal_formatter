@@ -10,17 +10,13 @@ module RSpec
         pending: 'other'
       }
 
-      attr_reader :assessment_plan_uuid, :control_id, :description, :statement_id, :ssp_url, :reason,
-                  :state
+      attr_reader(*(METADATA = %i[assessment_plan_uuid control_id description statement_id ssp_url reason
+                                  state]))
 
       def validate_contents(metadata)
         # Make sure required attributes are present
-        if metadata[:assessment_plan_uuid].nil? ||
-           metadata[:control_id].nil? ||
-           metadata[:description].nil? ||
-           metadata[:statement_id].nil? ||
-           metadata[:output_directory].nil?
-          raise IndexError
+        METADATA.each do |attribute|
+          raise IndexError if attribute.nil?
         end
       end
 
