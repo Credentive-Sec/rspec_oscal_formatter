@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require 'tapioca'
 require 'date'
-require_relative '../oscal'
+require 'oscal'
 
 module RSpec
   module RSpecOscalFormatter
@@ -15,8 +14,8 @@ module RSpec
               uuid: metadata.assessment_plan_uuid,
               metadata: build_ap_metadata_block(metadata),
               import_ssp: { href: './assessment_plan.json' },
-              reviewed_controls: make_reviewed_controls(metadata)
-            }
+              reviewed_controls: make_reviewed_controls(metadata),
+            },
           )
       end
 
@@ -25,7 +24,7 @@ module RSpec
           title: "Automated Testing Plan for login.gov. It #{metadata.description}",
           last_modified: DateTime.now.iso8601,
           version: DateTime.now.iso8601,
-          oscal_version: '1.1.2'
+          oscal_version: '1.1.2',
         }
       end
 
@@ -35,10 +34,10 @@ module RSpec
             include_controls: [
               {
                 control_id: metadata.control_id,
-                statement_ids: [metadata.statement_id]
-              }
-            ]
-          ]
+                statement_ids: [metadata.statement_id],
+              },
+            ],
+          ],
         }
       end
 

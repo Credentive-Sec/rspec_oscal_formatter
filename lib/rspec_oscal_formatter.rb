@@ -4,9 +4,7 @@ require 'rspec'
 require 'random/formatter'
 require 'date'
 require 'pathname'
-require 'tapioca'
 
-require_relative 'oscal'
 require_relative('rspec_oscal_formatter/create_assessment_plan')
 require_relative('rspec_oscal_formatter/create_assessment_results')
 require_relative('rspec_oscal_formatter/parse_spec_metadata')
@@ -40,11 +38,11 @@ module RSpec
         out_dir = create_output_directory(metadata)
 
         out_dir.join('assessment_plan.json').open('w').write(
-          CreateAssessmentPlan.new(metadata).to_json
+          CreateAssessmentPlan.new(metadata).to_json,
         )
 
         out_dir.join('assessment_result.json').open('w').write(
-          CreateAssessmentResult.new(metadata).to_json
+          CreateAssessmentResult.new(metadata).to_json,
         )
       end
     end

@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-require 'tapioca'
 require 'date'
 require 'random/formatter'
 
-require_relative '../oscal'
+require 'oscal'
 
 module RSpec
   module RSpecOscalFormatter
@@ -15,7 +14,7 @@ module RSpec
           uuid: Random.uuid,
           metadata: build_metadata_block,
           import_ap: { href: './exported_ap.json' }, # This is not correct. Should be dynamic.
-          results: create_results_block(metadata)
+          results: create_results_block(metadata),
         )
       end
 
@@ -24,7 +23,7 @@ module RSpec
           title: 'Test Result for login.gov.',
           last_modified: DateTime.now.iso8601,
           version: DateTime.now.iso8601,
-          oscal_version: '1.1.2'
+          oscal_version: '1.1.2',
         }
       end
 
@@ -37,7 +36,7 @@ module RSpec
           start: DateTime.now.iso8601,
           reviewed_controls: create_reviewed_controls(metadata),
           observations: [create_observations(metadata)],
-          findings: [create_findings(metadata)]
+          findings: [create_findings(metadata)],
         }]
       end
 
@@ -46,10 +45,10 @@ module RSpec
           control_selections: [
             {
               include_controls: [
-                { control_id: metadata.control_id }
-              ]
-            }
-          ]
+                { control_id: metadata.control_id },
+              ],
+            },
+          ],
         }
       end
 
@@ -59,7 +58,7 @@ module RSpec
           title: metadata.description,
           description: metadata.description,
           methods: ['TEST'],
-          collected: DateTime.now.iso8601
+          collected: DateTime.now.iso8601,
         }
       end
 
@@ -68,7 +67,7 @@ module RSpec
           uuid: Random.uuid,
           title: 'Automated Test Outcome',
           description: metadata.description,
-          target: create_target(metadata)
+          target: create_target(metadata),
         }
       end
 
@@ -78,8 +77,8 @@ module RSpec
           target_id: metadata.statement_id,
           status: {
             state: metadata.state,
-            reason: metadata.reason
-          }
+            reason: metadata.reason,
+          },
         }
       end
 
