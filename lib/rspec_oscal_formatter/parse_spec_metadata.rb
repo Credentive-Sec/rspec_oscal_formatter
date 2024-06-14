@@ -7,11 +7,13 @@ module RSpec
       STATUS_MAP = {
         passed: 'pass',
         failed: 'fail',
-        pending: 'other'
+        pending: 'other',
       }
 
-      attr_reader(*(METADATA = %i[assessment_plan_uuid control_id description statement_id ssp_url reason
-                                  state]))
+      attr_reader(
+        *(METADATA = %i[assessment_plan_uuid control_id description statement_id ssp_url reason
+                        state].freeze),
+      )
 
       def validate_contents(metadata)
         # Make sure required attributes are present
