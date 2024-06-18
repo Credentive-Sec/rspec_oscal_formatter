@@ -1,13 +1,10 @@
 # frozen_string_literal: true
 
 require 'rspec'
-require 'random/formatter'
 require 'date'
 require 'pathname'
 
-require_relative('rspec_oscal_formatter/create_assessment_plan')
-require_relative('rspec_oscal_formatter/create_assessment_results')
-require_relative('rspec_oscal_formatter/parse_spec_metadata')
+Dir[File.join(__dir__, "rspec_oscal_formatter", "*.rb")].each { |file| require file }
 
 # To format the output of Rspec tests as OSCAL Assessment Plans and Assessment Results
 module RSpec
